@@ -40,7 +40,11 @@ pkg
 #.\#*
 
 # For vim:
-#*.swp
+*.swp
+
+# For RVM:
+.ruby-gemset
+.ruby-version
 
 # For redcar:
 #.redcar
