@@ -65,8 +65,8 @@ class CmdlineOptions
     end
   end
 
-  def parse!
-    @option_parser.parse!
+  def parse!(argv=@option_parser.default_argv)
+    @option_parser.parse!(argv)
   end
 
   def verbose?
@@ -99,10 +99,10 @@ class CmdlineOptions
 
   def hl7_data
     if options[:file]
-      hl7_data = File.read(options[:file])
+      File.read(options[:file])
     else
       # The HL7 message to send
-      hl7_data = 'MSH|^~\&|PCC|2008|fart|GRAP|20140709000000||ADT^A03|154383|T|2.5
+      'MSH|^~\&|PCC|2008|fart|GRAP|20140709000000||ADT^A03|154383|T|2.5
     EVN|A03|20140709000000|||grap|19570711000000
     PID|1||121212121^^^^FI~130104^6102^^^HC~130104^^^^PN~121212121^^^^SS||Brooks^susie||19570711000000|F||||||||||130104|121212121
     PV1|1|I|^^^^^N^19|||||||||||||||2||||||||||||||||||||||||||20140421000000|20140708000000'
