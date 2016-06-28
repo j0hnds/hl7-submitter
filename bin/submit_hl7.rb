@@ -9,78 +9,15 @@ require 'savon'
 # To encode the HL7 data to be consumed by the Mirth service
 require 'base64'
 # For command line parsing
-# require 'optparse'
 require 'hl7-submitter'
-
-#options = {
-  #host: 'localhost',
-  #port: 20440,
-  #auth: false,
-  #username: 'pcc',
-  #password: 'Splatter',
-  #verbose: false,
-  #run: true
-#}
-
-#OptionParser.new do | opts |
-  #opts.banner = 'Usage: submit_hl7.rb [options]'
-
-  #opts.on('-a', '--auth', "Use basic auth; must specify username and password. Defaults to false") do 
-    #options[:auth] = true
-  #end
-
-  #opts.on('-h', '--host HOST', "Specify the web service host. Defaults to '#{options[:host]}'") do | host |
-    #options[:host] = host
-  #end
-
-  #opts.on('-f', '--file PATH', "Specify the file containing the HL7 data to submit") do | path |
-    #options[:file] = path
-  #end
-
-  #opts.on('-n', '--no-run', "Don't actually run the service") do 
-    #options[:run] = false
-  #end
-
-  #opts.on('-p', '--port PORT', Integer, "Specify the port of the web service host. Defaults to '#{options[:port]}'") do | port |
-    #options[:port] = port
-  #end
-
-  #opts.on('-u', '--username USERNAME', "Specify the username for authentication.") do | username |
-    #options[:username] = username
-  #end
-
-  #opts.on('-v', '--verbose', "Display verbose") do
-    #options[:verbose] = true
-  #end
-
-  #opts.on('--password PASSWORD', "Specify the password for authentication.") do | password |
-    #options[:password] = password
-  #end
-
-  #opts.on('--help', "Show the help for this script") do
-    #puts opts
-    #exit
-  #end
-
-#end.parse!
 
 options = CmdlineOptions.new.tap { | clo | clo.parse! }
 
 if options.verbose?
-# if options[:verbose]
   puts "Options specified: #{options.inspect}"
 end
 
 hl7_data = options.hl7_data
-#if options[:file]
-  #hl7_data = File.read(options[:file])
-#else
-  ## The HL7 message to send
-  #hl7_data = 'MSH|^~\&|PCC|2008|fart|GRAP|20140709000000||ADT^A03|154383|T|2.5
-#EVN|A03|20140709000000|||grap|19570711000000
-#PID|1||121212121^^^^FI~130104^6102^^^HC~130104^^^^PN~121212121^^^^SS||Brooks^susie||19570711000000|F||||||||||130104|121212121
-#PV1|1|I|^^^^^N^19|||||||||||||||2||||||||||||||||||||||||||20140421000000|20140708000000'
-#end
 
 if options.verbose?
   puts "The HL7 data being sent:"
@@ -135,7 +72,12 @@ if options.run?
     }
   )
 
+  {:submit_message_response=>{:data=>"TVNIfF5+XCZ8YWJhcWlzTWlydGh8MjAwOHxmYXJ0fEdSQVB8MjAxNDA3MDk
+                              wMDAwMDB8fEFDS3wxNTQzODN8UHwyLjUKTVNBfEFBfDE1NDM4Mw==", :"@xmlns:ns2"=>"http://www.pointclickcare.com/msg/"}}
   # Dump the response from the server
-  puts "Here's what we got: #{response.body}"
-  puts "Here's what we got: #{response.to_xml}"
+  puts "Here's what we got (as Hash): \n#{response.body}"
+  puts
+  puts "Here's what we got: (as XML): \n#{response.to_xml}"
+  puts
+  puts "Here's the decoded response: \n#{Base64.decode64(response.body[:submit_message_response][:data])}"
 end
