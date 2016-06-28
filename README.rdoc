@@ -2,6 +2,32 @@
 
 A little program used to submit HL7 messages to a Mirth Connect server.
 
+== Installation
+
+Well, it's a Ruby gem, so:
+
+    gem install hl7-submitter
+
+== Usage
+
+Invoke the binary script like:
+
+    $ submit_hl7.rb
+
+The command line arguments are:
+
+    $ submit_hl7.rb --help
+    Usage: submit_hl7.rb [options]
+        -a, --auth                       Use basic auth; must specify username and password. Defaults to false
+        -h, --host HOST                  Specify the web service host. Defaults to 'localhost'
+        -f, --file PATH                  Specify the file containing the HL7 data to submit
+        -n, --no-run                     Don't actually run the service
+        -p, --port PORT                  Specify the port of the web service host. Defaults to '20440'
+        -u, --username USERNAME          Specify the username for authentication.
+        -v, --verbose                    Display verbose
+        --password PASSWORD              Specify the password for authentication.
+        --help                           Show the help for this script
+
 == Contributing to hl7-submitter
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
